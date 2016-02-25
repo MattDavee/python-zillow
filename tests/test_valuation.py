@@ -30,6 +30,9 @@ class TestGetSearchResult(unittest.TestCase):
 
         self.assertEqual("48749425", place.zpid)
         self.assertEqual(5495, place.rentzestimate.amount)
+        self.assertEqual(4011, place.rentzestimate.valuation_range_low)
+        self.assertEqual(6209, place.rentzestimate.valuation_range_high)
+        self.assertEqual(17, place.rentzestimate.amount_change_30days)
 
     def test_zestimate(self):
         RAW_XML = ""
