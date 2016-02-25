@@ -18,6 +18,19 @@ class TestGetSearchResult(unittest.TestCase):
         self.assertEqual("2100641621", place.zpid)
         self.assertEqual(1723665, place.zestimate.amount)
 
+    def test_rent_zestimate(self):
+        RAW_XML = ""
+        with open('./testdata/rent_zestimate.xml', 'r') as f:
+            RAW_XML = ''.join(f.readlines())
+
+        data = xmltodict.parse(RAW_XML)
+
+        place = Place()
+        place.set_data(data.get('SearchResults:searchresults', None)['response']['results']['result'])
+
+        self.assertEqual("48749425", place.zpid)
+        self.assertEqual(5495, place.rentzestimate.amount)
+
     def test_zestimate(self):
         RAW_XML = ""
         with open('./testdata/get_zestimate.xml', 'r') as f:
