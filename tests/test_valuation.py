@@ -16,7 +16,7 @@ class TestGetSearchResult(unittest.TestCase):
         place.set_data(data.get('SearchResults:searchresults', None)['response']['results']['result'])
 
         self.assertEqual("2100641621", place.zpid)
-        self.assertEqual(1723665, place.zestiamte.amount)
+        self.assertEqual(1723665, place.zestimate.amount)
 
     def test_zestimate(self):
         RAW_XML = ""
@@ -29,7 +29,7 @@ class TestGetSearchResult(unittest.TestCase):
         place.set_data(data.get('Zestimate:zestimate', None)['response'])
 
         self.assertEqual("2100641621", place.zpid)
-        self.assertEqual(1723665, place.zestiamte.amount)
+        self.assertEqual(1723665, place.zestimate.amount)
 
     def test_getcomps_principal(self):
         RAW_XML = ""
