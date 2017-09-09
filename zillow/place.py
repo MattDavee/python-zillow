@@ -79,7 +79,7 @@ class FullAddress(SourceData):
             self.latitude = source_data['latitude']
             self.longitude = source_data['longitude']
         except:
-            return
+            pass
 
 
 class ZEstimateData(SourceData):
@@ -187,7 +187,7 @@ class LocalRealEstate(SourceData):
             self.fsbo_link = source_data['region']['links']['forSaleByOwner']
             self.sale_link = source_data['region']['links']['forSale']
         except:
-            return
+            pass
 
 class ExtendedData(SourceData):
     def __init__(self):
@@ -224,7 +224,7 @@ class ExtendedData(SourceData):
                 self.last_sold_price = price_element.get('#text', None)
             self.complete = True
         except:
-            return
+            pass
 
 class Place(SourceData):
     """
@@ -251,11 +251,12 @@ class Place(SourceData):
 
         self.zpid = source_data.get('zpid', None)
         self.similarity_score = source_data.get('@score', None)
-        self.links.set_data(source_data['links'])
-        self.full_address.set_data(source_data['address'])
-        self.zestiamte.set_data(source_data['zestimate'])
-        self.rentzestimate.set_data(source_data['rentzestimate'])
-        self.local_realestate.set_data(source_data['localRealEstate'])
+        self.links.set_data(source_data.get('links', None)
+        self.full_address.set_data(source_data.get('address', None))
+        self.zestiamte.set_data(source_data.get('zestimate', None))
+        self.rentzestimate.set_data(source_data.get('rentzestimate', None)
+        self.local_realestate.set_data(
+            source_data.get('localRealEstate', None))
         if self.has_extended_data:
             self.extended_data.set_data(source_data)
 
