@@ -43,6 +43,9 @@ class Links(SourceData):
         :source_data: Data from data.get('SearchResults:searchresults', None)['response']['results']['result']['links']
         :return:
         """
+        if not source_data:
+            return
+
         self.home_details = source_data['homedetails']
         try:
             self.graphs_and_data = source_data['graphsanddata']
@@ -66,12 +69,17 @@ class FullAddress(SourceData):
         :source_data: Data from data.get('SearchResults:searchresults', None)['response']['results']['result']['address']
         :return:
         """
-        self.street = source_data['street']
-        self.zipcode = source_data['zipcode']
-        self.city = source_data['city']
-        self.state = source_data['state']
-        self.latitude = source_data['latitude']
-        self.longitude = source_data['longitude']
+        if not source_data:
+            return
+        try:
+            self.street = source_data['street']
+            self.zipcode = source_data['zipcode']
+            self.city = source_data['city']
+            self.state = source_data['state']
+            self.latitude = source_data['latitude']
+            self.longitude = source_data['longitude']
+        except:
+            return
 
 
 class ZEstimateData(SourceData):
@@ -89,6 +97,9 @@ class ZEstimateData(SourceData):
         :source_data: Data from data.get('SearchResults:searchresults', None)['response']['results']['result']['zestimate']
         :return:
         """
+        if not source_data:
+            return
+
         try:
             self.amount = int(source_data['amount']['#text'])
         except:
@@ -127,6 +138,9 @@ class RentZEstimateData(SourceData):
         :source_data: Data from data.get('SearchResults:searchresults', None)['response']['results']['result']['rentzestimate']
         :return:
         """
+        if not source_data:
+            return
+
         try:
             self.amount = int(source_data['amount']['#text'])
         except:
@@ -162,14 +176,18 @@ class LocalRealEstate(SourceData):
         :source_data": Data from data.get('SearchResults:searchresults', None)['response']['results']['result']['localRealEstate']
         :return:
         """
-        self.region_name = source_data['region']['@name']
-        self.region_id = source_data['region']['@id']
-        self.region_type = source_data['region']['@type']
-        self.zillow_home_value_index = source_data.get('zindexValue', None)
-        self.overview_link = source_data['region']['links']['overview']
-        self.fsbo_link = source_data['region']['links']['forSaleByOwner']
-        self.sale_link = source_data['region']['links']['forSale']
-
+        if not source_data:
+            return
+        try:
+            self.region_name = source_data['region']['@name']
+            self.region_id = source_data['region']['@id']
+            self.region_type = source_data['region']['@type']
+            self.zillow_home_value_index = source_data.get('zindexValue', None)
+            self.overview_link = source_data['region']['links']['overview']
+            self.fsbo_link = source_data['region']['links']['forSaleByOwner']
+            self.sale_link = source_data['region']['links']['forSale']
+        except:
+            return
 
 class ExtendedData(SourceData):
     def __init__(self):
@@ -187,21 +205,26 @@ class ExtendedData(SourceData):
         self.complete = False
 
     def set_data(self, source_data):
-        self.fips_county = source_data.get('FIPScounty', None)
-        self.usecode = source_data['useCode']
-        self.tax_assessment_year = source_data.get('taxAssessmentYear', None)
-        self.tax_assessment = source_data.get('taxAssessment', None)
-        self.year_built = source_data.get('yearBuilt', None)
-        self.lot_size_sqft = source_data.get('lotSizeSqFt', None)
-        self.finished_sqft = source_data.get('finishedSqFt', None)
-        self.bathrooms = source_data.get('bathrooms', None)
-        self.bedrooms = source_data.get('bedrooms', None)
-        self.last_sold_date = source_data.get('lastSoldDate', None)
-        price_element = source_data.get('lastSoldPrice', None)
-        if price_element is not None:
-            self.last_sold_price = price_element.get('#text', None)
-        self.complete = True
+        if not source_data:
+            return
 
+        try:
+            self.fips_county = source_data.get('FIPScounty', None)
+            self.usecode = source_data['useCode']
+            self.tax_assessment_year = source_data.get('taxAssessmentYear', None)
+            self.tax_assessment = source_data.get('taxAssessment', None)
+            self.year_built = source_data.get('yearBuilt', None)
+            self.lot_size_sqft = source_data.get('lotSizeSqFt', None)
+            self.finished_sqft = source_data.get('finishedSqFt', None)
+            self.bathrooms = source_data.get('bathrooms', None)
+            self.bedrooms = source_data.get('bedrooms', None)
+            self.last_sold_date = source_data.get('lastSoldDate', None)
+            price_element = source_data.get('lastSoldPrice', None)
+            if price_element is not None:
+                self.last_sold_price = price_element.get('#text', None)
+            self.complete = True
+        except:
+            return
 
 class Place(SourceData):
     """
